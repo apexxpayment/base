@@ -26,6 +26,7 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
+use \Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class Data
@@ -125,6 +126,11 @@ class Data extends AbstractHelper
     protected $logger;
 
     /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * Data constructor.
      * @param Context $context
      * @param ScopeConfigInterface $scopeConfig
@@ -141,6 +147,7 @@ class Data extends AbstractHelper
      * @param SessionFactory $customerSession
      * @param CustomerRepositoryInterface $customerRepository
      * @param LoggerInterface $logger
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
@@ -157,7 +164,8 @@ class Data extends AbstractHelper
         FilterBuilder $filterBuilder,
         SessionFactory $customerSession,
         CustomerRepositoryInterface $customerRepository,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->encryptor = $encryptor ;
@@ -173,6 +181,7 @@ class Data extends AbstractHelper
         $this->customerSession = $customerSession;
         $this->customerRepository = $customerRepository;
         $this->logger = $logger;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -330,5 +339,25 @@ class Data extends AbstractHelper
         } else { 
             return "OT";
         }
+    }
+
+    /**
+     * Get Store code
+     *
+     * @return string
+     */
+    public function getStoreCode()
+    {
+        return $this->storeManager->getStore()->getCode();
+    }
+
+    /**
+     * Get Store Url
+     *
+     * @return string
+     */
+    public function getStoreUrl()
+    {
+        return $this->storeManager->getStore()->getBaseUrl();
     }
 }
