@@ -6,7 +6,7 @@
         "apexxpayment/applepay": "1.0.1",
         "apexxpayment/ccdirect": "1.0.1",
         "apexxpayment/cse": "1.0.1",
-        "apexxpayment/googlepay": "1.0.0",
+        "apexxpayment/googlepay": "1.0.1",
         "apexxpayment/hostedpayment": "1.0.1",
         "apexxpayment/paypalpayment": "1.0.1"
     },
