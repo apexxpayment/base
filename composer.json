@@ -7,13 +7,13 @@
         "apexxpayment/ccdirect": "1.0.1",
         "apexxpayment/cse": "1.0.1",
         "apexxpayment/googlepay": "1.0.1",
-        "apexxpayment/hostedpayment": "1.0.1",
+        "apexxpayment/hostedpayment": "1.0.2",
         "apexxpayment/paypalpayment": "1.0.1"
     },
     "minimum-stability": "stable",
     "prefer-stable" : true,
     "type": "magento2-module",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
