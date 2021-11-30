@@ -27,6 +27,8 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
 use \Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Url\DecoderInterface;
+use Magento\Framework\Url\EncoderInterface;
 
 /**
  * Class Data
@@ -54,6 +56,8 @@ class Data extends AbstractHelper
     const XML_PATH_SHOPPER_INTERACTION   = '/shopper_interaction';
     const XML_PATH_BRAND_NAME            = '/brand_name';
     const XML_PATH_CUSTOMER_PAYPAL_ID    = '/customer_paypal_id';
+    const ENCRYPT = 1;
+    const DECRYPT = 2;
 
     /**
      * @var ScopeConfigInterface
@@ -129,6 +133,14 @@ class Data extends AbstractHelper
      * @var StoreManagerInterface
      */
     protected $storeManager;
+    /**
+     * @var EncoderInterface
+     */
+    protected $urlEncoder;
+    /**
+     * @var DecoderInterface
+     */
+    protected $urlDecoder;
 
     /**
      * Data constructor.
@@ -165,7 +177,9 @@ class Data extends AbstractHelper
         SessionFactory $customerSession,
         CustomerRepositoryInterface $customerRepository,
         LoggerInterface $logger,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        EncoderInterface $urlEncoder,
+        DecoderInterface $urlDecoder
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->encryptor = $encryptor ;
@@ -182,6 +196,8 @@ class Data extends AbstractHelper
         $this->customerRepository = $customerRepository;
         $this->logger = $logger;
         $this->storeManager = $storeManager;
+        $this->urlEncoder = $urlEncoder;
+        $this->urlDecoder = $urlDecoder;
     }
 
     /**
@@ -359,5 +375,22 @@ class Data extends AbstractHelper
     public function getStoreUrl()
     {
         return $this->storeManager->getStore()->getBaseUrl();
+    }
+
+    /**
+     * @param $action
+     * @param $string
+     * @return bool|string
+     */
+    public function encryptDecrypt($action, $string)
+    {
+        $output = false;
+        $pymentStr = 'hosted';
+        if ($action == self::ENCRYPT) {
+            $output = $this->urlEncoder->encode($pymentStr.$string);
+        } elseif ($action == self::DECRYPT) {
+            $output = $this->urlDecoder->decode($string);
+        }
+        return $output;
     }
 }
