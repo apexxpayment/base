@@ -58,6 +58,7 @@ class Data extends AbstractHelper
     const XML_PATH_CUSTOMER_PAYPAL_ID    = '/customer_paypal_id';
     const ENCRYPT = 1;
     const DECRYPT = 2;
+    const XML_PATH_SIGNATURE_KEY         = '/signature_key';
 
     /**
      * @var ScopeConfigInterface
@@ -392,5 +393,30 @@ class Data extends AbstractHelper
             $output = $this->urlDecoder->decode($string);
         }
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignatureKey()
+    {
+        $signatureKey = $this->getConfigValue(self::XML_PATH_SIGNATURE_KEY);
+
+        return $this->encryptor->decrypt($signatureKey);
+    }
+
+    public function signatureEncryptDecrypt($method, $string){
+        $secret = $this->getSignatureKey();
+
+        if($method == self::ENCRYPT){
+            $enc_key = hash_hmac('sha512', $string, $secret, true);
+            
+            return base64_encode($enc_key);
+        }
+        if($method == self::DECRYPT){
+            $enc_key = hash_hmac('sha512', $string, $secret, true);
+            
+            return base64_decode($string);
+        }
     }
 }

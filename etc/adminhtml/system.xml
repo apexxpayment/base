@@ -33,6 +33,10 @@
                             <label>Debug</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         </field>
+                        <field id="signature_key" translate="label" type="obscure" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+                            <label>Signature Key</label>
+                            <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        </field>
                     </group>
                 </group>
             </group>
