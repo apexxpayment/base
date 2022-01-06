@@ -385,6 +385,9 @@ class Data extends AbstractHelper
      */
     public function encryptDecrypt($action, $string)
     {
+        //sending string as it is without encryption
+        return $string;
+        
         $output = false;
         $pymentStr = 'hosted';
         if ($action == self::ENCRYPT) {
