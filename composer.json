@@ -2,18 +2,18 @@
     "name": "apexxpayment/base",
     "description": "Apexx Base custom payment method in Magento 2",
     "require": {
-        "apexxpayment/afterpay": "1.0.5",
-        "apexxpayment/applepay": "1.0.4",
-        "apexxpayment/ccdirect": "1.0.4",
-        "apexxpayment/cse": "1.0.4",
-        "apexxpayment/googlepay": "1.0.4",
-        "apexxpayment/hostedpayment": "1.0.4",
-        "apexxpayment/paypalpayment": "1.0.4"
+        "apexxpayment/afterpay": "1.0.6",
+        "apexxpayment/applepay": "1.0.5",
+        "apexxpayment/ccdirect": "1.0.5",
+        "apexxpayment/cse": "1.0.5",
+        "apexxpayment/googlepay": "1.0.5",
+        "apexxpayment/hostedpayment": "1.0.5",
+        "apexxpayment/paypalpayment": "1.0.5"
     },
     "minimum-stability": "stable",
     "prefer-stable" : true,
     "type": "magento2-module",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
