@@ -14,9 +14,53 @@
                     <group id="credentials" translate="label" type="text" sortOrder="10"
                            showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Basic Apexx Settings</label>
-                        <field id="api_endpoint" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <label>API Endpoint</label>
+                        <comment>
+                            <![CDATA[
+                            <script type="text/javascript">//<![CDATA[
+                            require(['jquery'], function(){
+                                if (jQuery('#api_type').val() == 'Atomic') {
+                                    toggleDependantGroups(true);
+                                } else if (jQuery('#payment_us_apexx_section_apexxpayment_credentials_api_type').val() == 'Atomic') {
+                                    toggleDependantGroups(true);
+                                } else {
+                                    toggleDependantGroups(false);
+                                }
+                                jQuery('#payment_us_apexx_section_apexxpayment_credentials_api_type').change(function() {
+                                    if (jQuery(this).val() == 'Atomic') {
+                                        toggleDependantGroups(true);
+                                    } else {
+                                        toggleDependantGroups(false);
+                                    }
+                                });
+                                function toggleDependantGroups(hide=true)
+                                {
+                                    if (hide) {
+                                        jQuery('#payment_us_apexx_section_apexxpayment_bnpl_gateway-link').closest('div.section-config').show();
+                                    } else {
+                                       jQuery('#payment_us_apexx_section_apexxpayment_bnpl_gateway-link').closest('div.section-config').hide();
+                                    }
+                                }
+                            });
+                            </script>]]>
+                        </comment>
+                        <field id="api_type" translate="label" type="select" sortOrder="5"
+                               showInDefault="1" showInWebsite="1" showInStore="0">
+                            <label>API Type</label>
+                            <source_model>Apexx\Base\Model\Adminhtml\Source\ApiType</source_model>
+                        </field>
+                        <field id="atomic_api_endpoint" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Atomic API Endpoint</label>
                             <comment>Please add url like (http://domain.com/test/) End with slash</comment>
+                            <depends>
+                                <field id="api_type">Atomic</field>
+                            </depends>
+                        </field>
+                        <field id="ax2_api_endpoint" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>AX2 API Endpoint</label>
+                            <comment>Please add url like (http://domain.com/test/) End with slash</comment>
+                            <depends>
+                                <field id="api_type">AX2</field>
+                            </depends>
                         </field>
                         <field id="merchant_api_key" translate="label" type="obscure" sortOrder="15"
                                showInDefault="1" showInWebsite="1" showInStore="0">

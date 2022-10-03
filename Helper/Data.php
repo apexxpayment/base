@@ -40,7 +40,9 @@ class Data extends AbstractHelper
      * Config paths
      */
     const XML_PATH_BASE_PAYMENT          = 'payment/apexx_section/apexxpayment/credentials';
-    const XML_PATH_API_ENDPOINT          = '/api_endpoint';
+    const XML_PATH_API_TYPE              = '/api_type';
+    const XML_PATH_ATOMIC_API_ENDPOINT   = '/atomic_api_endpoint';
+    const XML_PATH_AX2_API_ENDPOINT      = '/ax2_api_endpoint';
     const XML_PATH_MERCHNAT_API_KEY      = '/merchant_api_key';
     const XML_PATH_ACCOUNT_ID            = '/account_id';
     const XML_PATH_ORGANIZATION_ID       = '/organization_id';
@@ -220,7 +222,12 @@ class Data extends AbstractHelper
      */
     public function getApiEndpoint()
     {
-        return $merchantApiKey = $this->getConfigValue(self::XML_PATH_API_ENDPOINT);
+        $apiType = $this->getApiType();
+        if ($apiType == 'Atomic') {
+            return  $this->getConfigValue(self::XML_PATH_ATOMIC_API_ENDPOINT);
+        } else {
+            return $this->getConfigValue(self::XML_PATH_AX2_API_ENDPOINT);
+        }
     }
 
     /**
@@ -315,7 +322,7 @@ class Data extends AbstractHelper
      * @param $orderId
      * @return string
      */
-    public function getHostedPayTxnId($orderId) 
+    public function getHostedPayTxnId($orderId)
     {
         $txnId = '';
         $this->searchBuilder->addFilters(
@@ -353,7 +360,7 @@ class Data extends AbstractHelper
 
         if (array_key_exists($cardbrand, $cardList)) {
             return $cardList[$cardbrand];
-        } else { 
+        } else {
             return "OT";
         }
     }
@@ -413,13 +420,21 @@ class Data extends AbstractHelper
 
         if($method == self::ENCRYPT){
             $enc_key = hash_hmac('sha512', $string, $secret, true);
-            
+
             return base64_encode($enc_key);
         }
         if($method == self::DECRYPT){
             $enc_key = hash_hmac('sha512', $string, $secret, true);
-            
+
             return base64_decode($string);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiType()
+    {
+        return $this->getConfigValue(self::XML_PATH_API_TYPE);
     }
 }
