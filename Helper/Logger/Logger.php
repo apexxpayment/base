@@ -9,6 +9,7 @@ namespace Apexx\Base\Helper\Logger;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Monolog\DateTimeImmutable;
 use Monolog\Logger as MonoLogger;
 
 /**
@@ -62,7 +63,7 @@ class Logger extends MonoLogger
         $this->storeManager = $storeManager;
     }
 
-    public function addRecord($level, $message, array $context = [])
+    public function addRecord($level, $message, array $context = [], DateTimeImmutable $datetime = null): bool
     {
         $store = $this->storeManager->getStore();
         if (!$this->config->isSetFlag(
@@ -74,6 +75,6 @@ class Logger extends MonoLogger
             return false;
         }
 
-        return parent::addRecord(self::DEBUG, $message, $context);
+        return parent::addRecord(self::DEBUG, $message, $context, $datetime);
     }
 }
